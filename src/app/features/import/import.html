@@ -1,0 +1,21 @@
+<form action="">
+  <fieldset>
+    <legend> Fecha Carga</legend>
+    <input type="date">
+  </fieldset>
+  <fieldset class="file" 
+      (drop)="soltar($event)" 
+      (dragover)="prevent($event)" 
+      (dragleave)="prevent($event)">
+    <legend>Cargar Archivo</legend>
+    <section>
+      @if(archivo?.name){
+        <img src="xlsx.svg" width="40">
+        <label for="fileInput">&nbsp;{{archivo?.name}}</label>
+      }@else{
+        <label for="fileInput">Seleccione o Arrastre</label>
+      }
+      <input type="file" accept=".xlsx" id="fileInput" (change)="handleFileInput($event)"/>
+    </section>
+  </fieldset>
+</form>

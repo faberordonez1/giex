@@ -1,0 +1,29 @@
+fieldset.file{
+  border: 2px dashed var(--focus);
+  cursor: pointer;
+  height: 100px;
+}
+
+fieldset.file:hover{
+  border-color: var(--links);
+}
+
+fieldset.file>section{
+  text-align: center;
+  font-weight: bold;
+  font-size: 1.2rem;
+  margin-top: 20px;
+  cursor: pointer;
+}
+
+fieldset.file>section>label{
+  cursor: pointer;
+}
+
+fieldset.file>section:hover{
+  color: var(--links);
+}
+
+input[type="file"]{
+  display:none;
+}
