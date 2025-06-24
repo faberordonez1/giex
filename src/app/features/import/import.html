@@ -19,3 +19,23 @@
     </section>
   </fieldset>
 </form>
+
+@if (dataFile() && dataFile().length) {
+  <table>
+    <thead>
+      <tr>
+        @for (col of dataFile()[0]; track $index) { <th>{{col}}</th>}
+      </tr>
+    </thead>
+
+    <tbody>
+      @for (rowData of dataFile(); track $index; let primero= $first ) {
+          @if (!primero) {
+            <tr>
+              @for (value of rowData; track $index) {<td>{{value}}</td>}
+            </tr>
+          }
+      }
+    </tbody>
+  </table>
+}

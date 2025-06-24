@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
+import * as ExcelJS from 'exceljs';
 
 @Component({
   selector: 'app-import',
@@ -9,6 +10,7 @@ import { Component } from '@angular/core';
 export class Import {
 
    archivo:any
+   dataFile=signal<any[]>([]);
 
   soltar(e: DragEvent) {
     e?.preventDefault();
@@ -31,6 +33,9 @@ export class Import {
     if (input.files && input.files.length > 0) {
       const file = input.files[0];
       this.archivo=file;
+
+      this.readExcelWithExcelJS(file);
+
       const reader = new FileReader();
       reader.onload = (e: ProgressEvent<FileReader>) => {
         const content = e.target?.result as string;
@@ -39,6 +44,22 @@ export class Import {
       };
       reader.readAsText(file);
     }
+  }
+
+  async readExcelWithExcelJS(file: File) {
+    const workbook = new ExcelJS.Workbook();
+    const arrayBuffer = await file.arrayBuffer();
+    
+    await workbook.xlsx.load(arrayBuffer);
+    
+    const worksheet = workbook.getWorksheet(1);//Obtiene la primera hoja de cálculo
+    if(!worksheet) return;
+
+    let dataFile:any[] = []; // Limpiar datos previos
+
+    worksheet.eachRow((row, rowNumber) =>dataFile.push(row.values))
+
+    this.dataFile.set(dataFile);
   }
 
 
